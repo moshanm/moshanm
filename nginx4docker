@@ -1,0 +1,40 @@
+cd to folder create image
+mkdir Dockerfile
+FROM nginx
+COPY .  /usr/share/nginx/html/
+
+docker  build -t esha .
+
+docker run -itd -p 80:80 --name moinx esha
+
+docker exec -it moinx /bin/bash
+
+PS C:\mo\isloq> docker images
+REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
+wwww         latest    eedd6c7b163d   3 minutes ago   221MB
+
+
+sudo docker exec -it esha /bin/bash
+root@686f7b621cf1:/usr/share# ls
+X11              ca-certificates  doc         gcc       libc-bin     maven-repo  pam-configs  tabset      zsh
+base-files       common-licenses  doc-base    gdb       libgcrypt20  menu        perl5        terminfo
+base-passwd      debconf          dpkg        info      lintian      misc        pixmaps      util-linux
+bash-completion  debianutils      fontconfig  java      locale       nginx       polkit-1     xml
+bug              dict             fonts       keyrings  man          pam         readline     zoneinfo
+root@686f7b621cf1:/usr/share# cd ../
+root@686f7b621cf1:/usr# ls
+bin  games  include  lib  lib32  lib64  libexec  libx32  local  sbin  share  src
+root@686f7b621cf1:/usr# pwd
+/usr
+root@686f7b621cf1:/usr# ls
+bin  games  include  lib  lib32  lib64  libexec  libx32  local  sbin  share  src
+root@686f7b621cf1:/usr#
+root@686f7b621cf1:/usr#
+root@686f7b621cf1:/usr#
+root@686f7b621cf1:/usr#
+root@686f7b621cf1:/usr#
+root@686f7b621cf1:/usr# exit
+exit
+PS C:\Users\moshanm\Documents\Docker_my\nginx> docker images
+REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
+esha         latest    2a4f09c6b922   11 minutes ago   187MB
