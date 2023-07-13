@@ -1,0 +1,100 @@
+Aws install three instance 
+ubuntu  three
+use same keys maybe cluster
+
+same vpc and same subnet port 80 / https/ http and all Trafic
+master
+worker1
+worker2
+
+sudo su -
+Master nodes
+hostnamectl set-hostname master
+bash
+yum install docker
+systemctl enable docker
+ystemctl restart docker
+ystemctl status docker
+
+free -mh
+
+sesstatus ( check if it is disabled
+
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+Red-hat based distibution
+
+cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch
+enabled=1
+gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+exclude=kubelet kubeadm kubectl
+EOF
+
+
+sudo yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
+
+sudo systemctl enable kubelet
+sudo systemctl restart kubelet
+kubeadm init
+
+while second and third node running
+
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):%(id -g) $HOME/.kube/config
+export KUBECONFIG=/etc/kubernetes/admin.conf
+kubectl get nodes
+kubectl get pods -A
+
+
+
+========================================== Go to Second worker node
+hostnamectl set-hostname worker1
+bash
+yum install docker
+systemctl enable docker
+systemctl restart docker
+systemctl status docker
+
+
+cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch
+enabled=1
+gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+exclude=kubelet kubeadm kubectl
+EOF
+
+sudo yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
+sudo systemctl enable kubelet
+sudo systemctl restart kubelet
+
+****************************
+get the command from master
+to add to the cluster
+starts with 
+kubeadm join xx.xx.xx.xx:6443 --token  1xyzxyz.xyzxyzxyz \
+ --discover-taken-ca-cert-hash sha236123456xyz12345xyz
+
+==================== > go to master and try 
+kubectl get nodes
+
+kubectl get pods
+
+In master
+https://docs.tigera.io/calico/latest/getting-started/kubernetes/self-managed-onprem/onpremises#install-calico
+
+Manifest
+curl https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml -O
+
+kubectl apply -f calico.yaml
+
+kubectl get pods
+
+kubectl run esha --image=nginx
+kubectl get pods -o wide
